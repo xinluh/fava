@@ -9,11 +9,6 @@
     {% if invert %}
       {% set diff = -diff %}
     {% endif %}
-    {% if diff %}
-    <span class="diff{{ ' positive' if diff > 0 else ' negative' }}" title="{{ cost_num|format_currency(currency, invert=invert) }} {{ currency }}">
-      ({{ diff|format_currency(currency) }})
-    </span>
-    {% endif %}
   {% endif %}
   <span class="number">{{ num|format_currency(currency, invert=invert) }}</span>
 {% endmacro %}
