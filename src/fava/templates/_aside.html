@@ -3,7 +3,7 @@
 {% if ledger.misc.sidebar_links %}
 <ul class="navigation">
   {% for label, link in ledger.misc.sidebar_links %}
-  <li><a href="{{ link }}" data-remote>{{ label }}</a></li>
+  <li><a href="{{ link }}" data-keyboard-shortcut="g {{loop.index}}" data-remote>{{ label }}</a></li>
   {% endfor %}
 </ul>
 {% endif %}
@@ -33,7 +33,7 @@
   <li><svelte-component type="account-selector"></svelte-component></li>
   {% elif id == 'editor' %}
   <li id="error-count" class="error{{ ' hidden' if not ledger.errors else '' }}">
-    <a href="{{ url_for('report', report_name='errors') }}">
+    <a href="{{ url_for('report', report_name='errors') }}" data-keyboard-shortcut="g e">
       {{ _('Errors') }} <span class="bubble">{{ ledger.errors|length }}</span>
     </a>
   </li>

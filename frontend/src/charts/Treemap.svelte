@@ -43,9 +43,20 @@
     param: HierarchyRectangularNode<AccountHierarchyDatum>
   ) {
     function update(d: HierarchyRectangularNode<AccountHierarchyDatum>) {
-      const length = node.getComputedTextLength();
-      node.style.visibility =
-        d.x1 - d.x0 > length + 4 && d.y1 - d.y0 > 14 ? "visible" : "hidden";
+      const length = node.children[0].getComputedTextLength();
+      const line1Fits = d.x1 - d.x0 > length + 4 && d.y1 - d.y0 > 14;
+
+      const line2Length = node.children[1].getComputedTextLength();
+      const line2Fits = d.x1 - d.x0 > line2Length + 4 && d.y1 - d.y0 > 20;
+
+      node.children[0].style.visibility = line1Fits ? "visible" : "hidden";
+      node.children[1].style.visibility = line1Fits && line2Fits  ? "visible" : "hidden";
+
+      if (!line2Fits) {
+        node.setAttribute("dy", ".5em");
+      } else {
+        node.setAttribute("dy", "0em");
+      }
     }
     update(param);
     return { update };
@@ -62,12 +73,15 @@
       <text
         use:setVisibility={d}
         on:click={() => router.navigate(urlFor(`account/${d.data.account}/`))}
-        dy=".5em"
+        dy="0em"
         x={(d.x1 - d.x0) / 2}
         y={(d.y1 - d.y0) / 2}
         text-anchor="middle"
       >
-        {d.data.account.split(":").pop() || ""}
+        <tspan>{d.data.account.split(":").pop() || ""}</tspan>
+        <tspan x={(d.x1 - d.x0) / 2} y={(d.y1 - d.y0) / 2} dy="1.3em" style="font-size:x-small">
+          {$ctx.currency(d.value || 0)}{" "}{currency} ({formatPercentage((d.value || 0) / (root.value || 1))})
+        </tspan>
       </text>
     </g>
   {/each}

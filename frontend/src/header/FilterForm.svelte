@@ -100,6 +100,10 @@
     margin: 0 4px 6px 0;
   }
 
+  form > :global(span:focus-within) {
+    max-width: 48rem;
+  }
+
   form :global(input) {
     padding: 8px 25px 8px 10px;
     background-color: var(--color-background);
