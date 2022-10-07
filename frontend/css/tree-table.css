@@ -97,7 +97,7 @@
 }
 
 .tree-table .num {
-  width: 10em;
+  width: 11em;
 }
 
 .tree-table .num a {
@@ -106,7 +106,7 @@
 }
 
 .tree-table .other {
-  width: 13em;
+  width: 10em;
 }
 
 .tree-table .other a {
@@ -153,7 +153,7 @@
 
 .tree-table .diff {
   margin-right: 3px;
-  font-size: 0.9em;
+  font-size: 0.6em;
   color: var(--budget-zero);
   white-space: nowrap;
 }
