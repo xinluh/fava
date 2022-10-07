@@ -53,6 +53,17 @@
   cursor: pointer;
 }
 
+.journal .dest-account {
+  flex-grow: 1;
+  text-align: right;
+  color: gray;
+  font-size: 0.8em;
+}
+
+.journal .dest-account .light {
+  color: var(--color-journal-link);
+}
+
 .journal .postings {
   font-size: 0.9em;
   background-color: var(--journal-postings);
@@ -151,6 +162,7 @@
 
 .journal .description {
   flex: 1;
+  display: flex;
   padding-left: 8px;
   overflow: hidden;
   text-overflow: ellipsis;

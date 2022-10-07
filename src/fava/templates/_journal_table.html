@@ -96,6 +96,16 @@
         {% elif type == 'transaction' %}
             <strong class="payee">{{ entry.payee or '' }}</strong>{% if entry.payee and entry.narration %}<span class="separator"></span>{% endif %}{{ entry.narration or '' }}
             {{ render_tags_links(entry) }}
+            {% if entry.postings and entry.postings|length == 2 %}
+              {% if entry.postings[1].account.startswith('Expenses') or entry.postings[1].account.startswith('Income') %}
+              <span class="dest-account">
+                <span class="light">{{entry.postings[1].account.split(':')[:-1]|join(':')}}:</span>
+                <a href="{{ url_for('account', name=entry.postings[1].account) }}">
+                  {{ entry.postings[1].account.split(':')[-1] }}
+                </a>
+              </span>
+              {% endif %}
+            {% endif %}
         {% endif %}
         </span>
         <span class="indicators">
