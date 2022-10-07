@@ -52,8 +52,9 @@
     <ConversionAndInterval />
   </Chart>
   <div hidden={!$showCharts}>
-    {#each charts as chart}
+    {#each charts as chart, i}
       <span
+        data-key={i === 0 ? "c" : null}
         class:selected={chart === $activeChart}
         on:click={() => {
           $activeChart = chart;

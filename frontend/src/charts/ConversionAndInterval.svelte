@@ -17,7 +17,7 @@
     <option value={conversion}>{conversionName}</option>
   {/each}
 </select>
-<select bind:value={$interval}>
+<select bind:value={$interval} data-keyboard-shortcut="i">
   {#each intervals as [interval, name]}
     <option value={interval}>{name}</option>
   {/each}

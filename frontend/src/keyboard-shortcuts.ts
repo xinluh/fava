@@ -93,6 +93,9 @@ function keydown(event: KeyboardEvent): void {
     if (handler instanceof HTMLInputElement) {
       event.preventDefault();
       handler.focus();
+    } else if (handler instanceof HTMLSelectElement) {
+      event.preventDefault();
+      handler.focus();
     } else if (handler instanceof HTMLElement) {
       handler.click();
     } else {
@@ -149,7 +152,9 @@ export function bindKey(
   }
   keyboardShortcuts.set(key, handler);
   return (): void => {
-    keyboardShortcuts.delete(key);
+    if (keyboardShortcuts.get(key) === handler) {
+      keyboardShortcuts.delete(key);
+    }
   };
 }
 
