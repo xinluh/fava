@@ -152,6 +152,33 @@ def test_null_meta_posting() -> None:
     assert txn.postings[0].meta is None
     assert len(FILTER.apply([txn])) == 0
 
+@pytest.mark.parametrize(
+    "string,num_match",
+    [
+        ('amount:"1.1 USD"', 1),
+        ('amount:"=1.1 USD"', 1),
+        ('amount:"=1.2 USD"', 0),
+        ('amount:">1 USD"', 1),
+        ('amount:"<1 USD"', 0),
+        ('amount:">=1.1 USD"', 1),
+        ('amount:"<=1.1 USD"', 1),
+    ]
+)
+def test_amount_filter(string, num_match):
+    FILTER.set(string)
+
+    txn = Transaction(
+        {},
+        datetime.date(2017, 12, 12),
+        "*",
+        "",
+        "",
+        None,
+        None,
+        [],
+    )
+    create_simple_posting(txn, "Assets:ETrade:Cash", "1.1", "USD")
+    assert len(FILTER.apply([txn])) == num_match
 
 def test_account_filter(example_ledger: FavaLedger) -> None:
     account_filter = AccountFilter(
