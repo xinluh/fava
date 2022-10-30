@@ -87,6 +87,15 @@ class ExtensionModule(FavaModule):
 
     # pylint: disable=missing-docstring
 
+    def before_entry_modified(self, entry: Directive, new_lines: str) -> str:
+        modified_new_lines = new_lines
+        for ext in self.exts_for_hook("before_entry_modified"):
+            ret = ext.before_entry_modified(entry, modified_new_lines)
+            if ret is not None:
+                modified_new_lines = ret
+
+        return modified_new_lines
+
     def after_entry_modified(self, entry: Directive, new_lines: str) -> None:
         for ext in self.exts_for_hook("after_entry_modified"):
             ext.after_entry_modified(entry, new_lines)

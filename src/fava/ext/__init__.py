@@ -50,6 +50,9 @@ class FavaExtensionBase:
     def after_entry_modified(self, entry: Directive, new_lines: str) -> None:
         """Called after an `entry` has been modified."""
 
+    def before_entry_modified(self, entry: Directive, new_lines: str) -> str:
+        """Call before an `entry` has been modified, with a chance to modify the new lines"""
+
     def after_insert_entry(self, entry: Directive) -> None:
         """Called after an `entry` has been inserted."""
 
