@@ -9,6 +9,7 @@
     <thead>
       <tr>
         <th data-sort="string" data-order="asc">{{ _('Date') }}</th>
+        <th>End</th>
         <th data-sort="string">{{ _('Description') }}</th>
       </tr>
     </thead>
@@ -16,6 +17,7 @@
       {% for event in group.list %}
       <tr>
         <td><a href="#context-{{ event|hash_entry }}">{{ event.date }}</a></td>
+        <td>{% if event.meta.get('end') %}{{ event.meta['end'] }} {% endif %}</td>
         <td>{{ event.description }}</td>
       </tr>
       {% endfor %}

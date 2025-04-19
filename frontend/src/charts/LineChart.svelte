@@ -3,7 +3,7 @@
   import { axisBottom, axisLeft } from "d3-axis";
   import { quadtree } from "d3-quadtree";
   import { scaleLinear, scaleUtc } from "d3-scale";
-  import { area, curveStepAfter, line } from "d3-shape";
+  import { area, curveMonotoneX, line } from "d3-shape";
   import { getContext } from "svelte";
   import type { Writable } from "svelte/store";
 
@@ -66,13 +66,13 @@
   $: lineShape = line<LineChartDatum>()
     .x((d) => x(d.date))
     .y((d) => y(d.value))
-    .curve(curveStepAfter);
+    .curve(curveMonotoneX);
 
   $: areaShape = area<LineChartDatum>()
     .x((d) => x(d.date))
     .y1((d) => y(d.value))
     .y0(Math.min(innerHeight, y(0)))
-    .curve(curveStepAfter);
+    .curve(curveMonotoneX);
 
   // Axes
   $: xAxis = axisBottom(x).tickSizeOuter(0);
@@ -118,13 +118,12 @@
         />
       {/each}
     </g>
-    {#if $lineChartMode === "line"}
       <g>
         {#each data as d}
           <g fill={$currenciesScale(d.name)}>
             {#each d.values as v}
               <circle
-                r="2"
+                r="1"
                 cx={x(v.date)}
                 cy={y(v.value)}
                 class:desaturate={v.date > today}
@@ -133,7 +132,6 @@
           </g>
         {/each}
       </g>
-    {/if}
   </g>
 </svg>
 
@@ -144,7 +142,7 @@
 
   .lines path {
     fill: none;
-    stroke-width: 2px;
+    stroke-width: 1px;
   }
 
   .area path {

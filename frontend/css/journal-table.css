@@ -58,6 +58,10 @@
   text-align: right;
   color: gray;
   font-size: 0.8em;
+  margin-left: 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .journal .dest-account .light {
@@ -156,12 +160,18 @@
   width: 3rem;
 }
 
+@media (max-width: 767px) {
+  .journal .flag {
+    width: 1rem;
+  }
+}
+
 .journal .change {
   font-weight: 500;
 }
 
 .journal .description {
-  flex: 1;
+  flex: 2 0 13em;
   display: flex;
   padding-left: 8px;
   overflow: hidden;
@@ -220,11 +230,12 @@
 
 .journal .indicators {
   display: flex;
-  flex-shrink: 3;
-  flex-wrap: wrap;
+  flex: 1 3 0px;
   align-items: center;
+  overflow: hidden;
   justify-content: flex-end;
   cursor: pointer;
+  max-width: max-content;
 }
 
 .journal .indicators span {
@@ -248,5 +259,6 @@
   line-height: 16px;
   color: var(--journal-metadata-indicator);
   text-transform: lowercase;
-  border-radius: 20px;
+  border-radius: 10px;
+  min-width: 10px;
 }

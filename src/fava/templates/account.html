@@ -11,8 +11,13 @@
 
 {% block content %}
 <div class="droptarget" data-account-name="{{ account_name }}">
-  {{ charts.account_balance(account_name) }}
-  {{ charts.interval_totals(g.interval, account_name, label=_('Changes')) }}
+  {% if account_name.startswith('Expenses') or account_name.startswith('Income') %}
+    {{ charts.interval_totals(g.interval, account_name, label=_('Changes')) }}
+    {{ charts.account_balance(account_name) }}
+  {% else %}
+    {{ charts.account_balance(account_name) }}
+    {{ charts.interval_totals(g.interval, account_name, label=_('Changes')) }}
+  {% endif %}
 
   {% if not journal %}
   {{ charts.hierarchy(account_name) }}

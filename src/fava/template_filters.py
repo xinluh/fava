@@ -86,6 +86,21 @@ def hash_entry(entry: Directive) -> str:
     return compare.hash_entry(entry)
 
 
+def single_income_or_expense_posting(entry: Directive) -> Posting:
+    if entry is None or entry.postings is None:
+        return None
+
+    income_postings = [p for p in entry.postings if p.account.startswith('Income:')]
+    expense_postings = [p for p in entry.postings if p.account.startswith('Expenses:')]
+
+    if len(income_postings) == 1 and len(expense_postings) == 0:
+        return income_postings[0]
+
+    if len(expense_postings) == 1 and len(income_postings) == 0:
+        return expense_postings[0]
+
+    return None
+
 def balance_children(account: realization.RealAccount) -> Inventory:
     """Compute the total balance of an account."""
     return realization.compute_balance(account)
@@ -178,4 +193,5 @@ FILTERS = [
     remove_keys,
     should_show,
     units,
+    single_income_or_expense_posting,
 ]

@@ -51,7 +51,7 @@
   );
 
   function tooltipText(d: ScatterPlotDatum) {
-    return [domHelpers.t(d.description), domHelpers.em(day(d.date))];
+    return [domHelpers.t(d.description), domHelpers.em(day(d.date) + (d.meta?.end ? ' - ' + d.meta.end : ''))];
   }
 
   const tooltipFindNode: TooltipFindNode = (xPos, yPos) => {
@@ -76,6 +76,22 @@
           cy={y(dot.type)}
           class:desaturate={dot.date > today}
         />
+        {#if dot.meta?.end}
+          <line class="event-line"
+            x1={x(dot.date)}
+            x2={x(new Date(dot.meta.end))}
+            y1={y(dot.type)}
+            y2={y(dot.type)}
+            stroke={scatterplotScale(dot.type)}
+          />
+        <circle
+          r="3"
+          fill={scatterplotScale(dot.type)}
+          cx={x(new Date(dot.meta.end))}
+          cy={y(dot.type)}
+          class:desaturate={dot.date > today}
+        />
+        {/if}
       {/each}
     </g>
   </g>
@@ -88,5 +104,9 @@
 
   .desaturate {
     filter: saturate(50%);
+  }
+
+  .event-line {
+    stroke-width: 3px;
   }
 </style>

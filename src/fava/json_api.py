@@ -152,6 +152,13 @@ def get_changed() -> bool:
 
 
 @api_endpoint
+def get_force_reload() -> bool:
+    """Check for file changes."""
+    g.ledger.load_file()
+    return True
+
+
+@api_endpoint
 def get_errors() -> int:
     """Number of errors."""
     return len(g.ledger.errors)

@@ -1,6 +1,6 @@
 import { ok } from "../lib/result";
 import type { Result } from "../lib/result";
-import { array, date, object, string } from "../lib/validation";
+import { array, date, object, string, unknown } from "../lib/validation";
 
 export interface ScatterPlotDatum {
   date: Date;
@@ -15,7 +15,7 @@ export interface ScatterPlot {
 }
 
 const scatterplot_validator = array(
-  object({ type: string, date, description: string })
+  object({ type: string, date, description: string, meta: unknown })
 );
 
 export function scatterplot(json: unknown): Result<ScatterPlot, string> {

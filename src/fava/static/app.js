@@ -1548,7 +1548,7 @@ function locale_default(locale3) {
   var group2 = locale3.grouping === void 0 || locale3.thousands === void 0 ? identity_default : formatGroup_default(map.call(locale3.grouping, Number), locale3.thousands + ""), currencyPrefix = locale3.currency === void 0 ? "" : locale3.currency[0] + "", currencySuffix = locale3.currency === void 0 ? "" : locale3.currency[1] + "", decimal2 = locale3.decimal === void 0 ? "." : locale3.decimal + "", numerals = locale3.numerals === void 0 ? identity_default : formatNumerals_default(map.call(locale3.numerals, String)), percent = locale3.percent === void 0 ? "%" : locale3.percent + "", minus = locale3.minus === void 0 ? "\u2212" : locale3.minus + "", nan = locale3.nan === void 0 ? "NaN" : locale3.nan + "";
   function newFormat(specifier) {
     specifier = formatSpecifier(specifier);
-    var fill = specifier.fill, align = specifier.align, sign = specifier.sign, symbol = specifier.symbol, zero3 = specifier.zero, width = specifier.width, comma = specifier.comma, precision = specifier.precision, trim = specifier.trim, type = specifier.type;
+    var fill = specifier.fill, align = specifier.align, sign2 = specifier.sign, symbol = specifier.symbol, zero3 = specifier.zero, width = specifier.width, comma = specifier.comma, precision = specifier.precision, trim = specifier.trim, type = specifier.type;
     if (type === "n")
       comma = true, type = "g";
     else if (!formatTypes_default[type])
@@ -1569,10 +1569,10 @@ function locale_default(locale3) {
         value = isNaN(value) ? nan : formatType(Math.abs(value), precision);
         if (trim)
           value = formatTrim_default(value);
-        if (valueNegative && +value === 0 && sign !== "+")
+        if (valueNegative && +value === 0 && sign2 !== "+")
           valueNegative = false;
-        valuePrefix = (valueNegative ? sign === "(" ? sign : minus : sign === "-" || sign === "(" ? "" : sign) + valuePrefix;
-        valueSuffix = (type === "s" ? prefixes[8 + prefixExponent / 3] : "") + valueSuffix + (valueNegative && sign === "(" ? ")" : "");
+        valuePrefix = (valueNegative ? sign2 === "(" ? sign2 : minus : sign2 === "-" || sign2 === "(" ? "" : sign2) + valuePrefix;
+        valueSuffix = (type === "s" ? prefixes[8 + prefixExponent / 3] : "") + valueSuffix + (valueNegative && sign2 === "(" ? ")" : "");
         if (maybeSuffix) {
           i = -1, n = value.length;
           while (++i < n) {
@@ -2633,8 +2633,8 @@ var numberRe = /^\s*\d+/;
 var percentRe = /^%/;
 var requoteRe = /[\\^$*+?|[\]().{}]/g;
 function pad(value, fill, width) {
-  var sign = value < 0 ? "-" : "", string5 = (sign ? -value : value) + "", length = string5.length;
-  return sign + (length < width ? new Array(width - length + 1).join(fill) + string5 : string5);
+  var sign2 = value < 0 ? "-" : "", string5 = (sign2 ? -value : value) + "", length = string5.length;
+  return sign2 + (length < width ? new Array(width - length + 1).join(fill) + string5 : string5);
 }
 function requote(s) {
   return s.replace(requoteRe, "\\$&");
@@ -9012,9 +9012,9 @@ var DOMReader = class {
   }
   readTextNode(node) {
     let text2 = node.nodeValue;
-    for (let point2 of this.points)
-      if (point2.node == node)
-        point2.pos = this.text.length + Math.min(point2.offset, text2.length);
+    for (let point3 of this.points)
+      if (point3.node == node)
+        point3.pos = this.text.length + Math.min(point3.offset, text2.length);
     for (let off = 0, re2 = this.lineSeparator ? null : /\r\n?|\n/g; ; ) {
       let nextBreak = -1, breakSize = 1, m;
       if (this.lineSeparator) {
@@ -9029,9 +9029,9 @@ var DOMReader = class {
         break;
       this.lineBreak();
       if (breakSize > 1) {
-        for (let point2 of this.points)
-          if (point2.node == node && point2.pos > this.text.length)
-            point2.pos -= breakSize - 1;
+        for (let point3 of this.points)
+          if (point3.node == node && point3.pos > this.text.length)
+            point3.pos -= breakSize - 1;
       }
       off = nextBreak + breakSize;
     }
@@ -9059,14 +9059,14 @@ var DOMReader = class {
     }
   }
   findPointBefore(node, next) {
-    for (let point2 of this.points)
-      if (point2.node == node && node.childNodes[point2.offset] == next)
-        point2.pos = this.text.length;
+    for (let point3 of this.points)
+      if (point3.node == node && node.childNodes[point3.offset] == next)
+        point3.pos = this.text.length;
   }
   findPointInside(node, maxLen) {
-    for (let point2 of this.points)
-      if (node.nodeType == 3 ? point2.node == node : node.contains(point2.node))
-        point2.pos = this.text.length + Math.min(maxLen, point2.offset);
+    for (let point3 of this.points)
+      if (node.nodeType == 3 ? point3.node == node : node.contains(point3.node))
+        point3.pos = this.text.length + Math.min(maxLen, point3.offset);
   }
 };
 function isBlockElement(node) {
@@ -21054,16 +21054,16 @@ function createLineDialog(view) {
     if (!match)
       return;
     let { state } = view, startLine = state.doc.lineAt(state.selection.main.head);
-    let [, sign, ln, cl, percent] = match;
+    let [, sign2, ln, cl, percent] = match;
     let col = cl ? +cl.slice(1) : 0;
     let line = ln ? +ln : startLine.number;
     if (ln && percent) {
       let pc = line / 100;
-      if (sign)
-        pc = pc * (sign == "-" ? -1 : 1) + startLine.number / state.doc.lines;
+      if (sign2)
+        pc = pc * (sign2 == "-" ? -1 : 1) + startLine.number / state.doc.lines;
       line = Math.round(state.doc.lines * pc);
-    } else if (ln && sign) {
-      line = line * (sign == "-" ? -1 : 1) + startLine.number;
+    } else if (ln && sign2) {
+      line = line * (sign2 == "-" ? -1 : 1) + startLine.number;
     }
     let docLine = state.doc.line(Math.max(1, Math.min(state.doc.lines, line)));
     view.dispatch({
@@ -24947,10 +24947,10 @@ function pointer_default(event, node) {
   if (node) {
     var svg2 = node.ownerSVGElement || node;
     if (svg2.createSVGPoint) {
-      var point2 = svg2.createSVGPoint();
-      point2.x = event.clientX, point2.y = event.clientY;
-      point2 = point2.matrixTransform(node.getScreenCTM().inverse());
-      return [point2.x, point2.y];
+      var point3 = svg2.createSVGPoint();
+      point3.x = event.clientX, point3.y = event.clientY;
+      point3 = point3.matrixTransform(node.getScreenCTM().inverse());
+      return [point3.x, point3.y];
     }
     if (node.getBoundingClientRect) {
       var rect = node.getBoundingClientRect();
@@ -25746,7 +25746,7 @@ function create_fragment3(ctx2) {
     }
   };
 }
-var maxColumnWidth = 100;
+var maxColumnWidth = 40;
 var height = 250;
 function instance3($$self, $$props, $$invalidate) {
   let bar_groups;
@@ -26871,12 +26871,26 @@ function area_default(x0, y0, y1) {
   return area;
 }
 
-// node_modules/d3-shape/src/curve/step.js
-function Step(context, t4) {
-  this._context = context;
-  this._t = t4;
+// node_modules/d3-shape/src/curve/monotone.js
+function sign(x2) {
+  return x2 < 0 ? -1 : 1;
 }
-Step.prototype = {
+function slope3(that, x2, y2) {
+  var h0 = that._x1 - that._x0, h1 = x2 - that._x1, s0 = (that._y1 - that._y0) / (h0 || h1 < 0 && -0), s1 = (y2 - that._y1) / (h1 || h0 < 0 && -0), p = (s0 * h1 + s1 * h0) / (h0 + h1);
+  return (sign(s0) + sign(s1)) * Math.min(Math.abs(s0), Math.abs(s1), 0.5 * Math.abs(p)) || 0;
+}
+function slope2(that, t4) {
+  var h = that._x1 - that._x0;
+  return h ? (3 * (that._y1 - that._y0) / h - t4) / 2 : t4;
+}
+function point2(that, t03, t13) {
+  var x0 = that._x0, y0 = that._y0, x1 = that._x1, y1 = that._y1, dx = (x1 - x0) / 3;
+  that._context.bezierCurveTo(x0 + dx, y0 + dx * t03, x1 - dx, y1 - dx * t13, x1, y1);
+}
+function MonotoneX(context) {
+  this._context = context;
+}
+MonotoneX.prototype = {
   areaStart: function() {
     this._line = 0;
   },
@@ -26884,19 +26898,27 @@ Step.prototype = {
     this._line = NaN;
   },
   lineStart: function() {
-    this._x = this._y = NaN;
+    this._x0 = this._x1 = this._y0 = this._y1 = this._t0 = NaN;
     this._point = 0;
   },
   lineEnd: function() {
-    if (0 < this._t && this._t < 1 && this._point === 2)
-      this._context.lineTo(this._x, this._y);
+    switch (this._point) {
+      case 2:
+        this._context.lineTo(this._x1, this._y1);
+        break;
+      case 3:
+        point2(this, this._t0, slope2(this, this._t0));
+        break;
+    }
     if (this._line || this._line !== 0 && this._point === 1)
       this._context.closePath();
-    if (this._line >= 0)
-      this._t = 1 - this._t, this._line = 1 - this._line;
+    this._line = 1 - this._line;
   },
   point: function(x2, y2) {
+    var t13 = NaN;
     x2 = +x2, y2 = +y2;
+    if (x2 === this._x1 && y2 === this._y1)
+      return;
     switch (this._point) {
       case 0:
         this._point = 1;
@@ -26904,23 +26926,45 @@ Step.prototype = {
         break;
       case 1:
         this._point = 2;
-      default: {
-        if (this._t <= 0) {
-          this._context.lineTo(this._x, y2);
-          this._context.lineTo(x2, y2);
-        } else {
-          var x1 = this._x * (1 - this._t) + x2 * this._t;
-          this._context.lineTo(x1, this._y);
-          this._context.lineTo(x1, y2);
-        }
         break;
-      }
+      case 2:
+        this._point = 3;
+        point2(this, slope2(this, t13 = slope3(this, x2, y2)), t13);
+        break;
+      default:
+        point2(this, this._t0, t13 = slope3(this, x2, y2));
+        break;
     }
-    this._x = x2, this._y = y2;
+    this._x0 = this._x1, this._x1 = x2;
+    this._y0 = this._y1, this._y1 = y2;
+    this._t0 = t13;
   }
 };
-function stepAfter(context) {
-  return new Step(context, 1);
+function MonotoneY(context) {
+  this._context = new ReflectContext(context);
+}
+(MonotoneY.prototype = Object.create(MonotoneX.prototype)).point = function(x2, y2) {
+  MonotoneX.prototype.point.call(this, y2, x2);
+};
+function ReflectContext(context) {
+  this._context = context;
+}
+ReflectContext.prototype = {
+  moveTo: function(x2, y2) {
+    this._context.moveTo(y2, x2);
+  },
+  closePath: function() {
+    this._context.closePath();
+  },
+  lineTo: function(x2, y2) {
+    this._context.lineTo(y2, x2);
+  },
+  bezierCurveTo: function(x1, y1, x2, y2, x3, y3) {
+    this._context.bezierCurveTo(y1, x1, y2, x2, y3, x3);
+  }
+};
+function monotoneX(context) {
+  return new MonotoneX(context);
 }
 
 // node_modules/d3-shape/src/offset/none.js
@@ -28277,7 +28321,7 @@ function get_each_context_32(ctx2, list, i) {
   child_ctx[26] = list[i];
   return child_ctx;
 }
-function create_if_block_13(ctx2) {
+function create_if_block3(ctx2) {
   let g;
   let each_value_3 = ctx2[0];
   let each_blocks = [];
@@ -28290,7 +28334,7 @@ function create_if_block_13(ctx2) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(g, "class", "area svelte-1gzc8m3");
+      attr(g, "class", "area svelte-rh5vi");
       attr(g, "filter", ctx2[6]);
     },
     m(target, anchor) {
@@ -28339,7 +28383,7 @@ function create_each_block_32(ctx2) {
       path2 = svg_element("path");
       attr(path2, "d", path_d_value = (_a2 = ctx2[9](ctx2[26].values)) != null ? _a2 : void 0);
       attr(path2, "fill", path_fill_value = ctx2[5](ctx2[26].name));
-      attr(path2, "class", "svelte-1gzc8m3");
+      attr(path2, "class", "svelte-rh5vi");
     },
     m(target, anchor) {
       insert(target, path2, anchor);
@@ -28369,7 +28413,7 @@ function create_each_block_22(ctx2) {
       path2 = svg_element("path");
       attr(path2, "d", path_d_value = (_a2 = ctx2[10](ctx2[26].values)) != null ? _a2 : void 0);
       attr(path2, "stroke", path_stroke_value = ctx2[5](ctx2[26].name));
-      attr(path2, "class", "svelte-1gzc8m3");
+      attr(path2, "class", "svelte-rh5vi");
     },
     m(target, anchor) {
       insert(target, path2, anchor);
@@ -28389,53 +28433,6 @@ function create_each_block_22(ctx2) {
     }
   };
 }
-function create_if_block3(ctx2) {
-  let g;
-  let each_value = ctx2[0];
-  let each_blocks = [];
-  for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block7(get_each_context7(ctx2, each_value, i));
-  }
-  return {
-    c() {
-      g = svg_element("g");
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-    },
-    m(target, anchor) {
-      insert(target, g, anchor);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].m(g, null);
-      }
-    },
-    p(ctx3, dirty) {
-      if (dirty[0] & 4141) {
-        each_value = ctx3[0];
-        let i;
-        for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context7(ctx3, each_value, i);
-          if (each_blocks[i]) {
-            each_blocks[i].p(child_ctx, dirty);
-          } else {
-            each_blocks[i] = create_each_block7(child_ctx);
-            each_blocks[i].c();
-            each_blocks[i].m(g, null);
-          }
-        }
-        for (; i < each_blocks.length; i += 1) {
-          each_blocks[i].d(1);
-        }
-        each_blocks.length = each_value.length;
-      }
-    },
-    d(detaching) {
-      if (detaching)
-        detach(g);
-      destroy_each(each_blocks, detaching);
-    }
-  };
-}
 function create_each_block_12(ctx2) {
   let circle;
   let circle_cx_value;
@@ -28443,10 +28440,10 @@ function create_each_block_12(ctx2) {
   return {
     c() {
       circle = svg_element("circle");
-      attr(circle, "r", "2");
+      attr(circle, "r", "1");
       attr(circle, "cx", circle_cx_value = ctx2[3](ctx2[29].date));
       attr(circle, "cy", circle_cy_value = ctx2[2](ctx2[29].value));
-      attr(circle, "class", "svelte-1gzc8m3");
+      attr(circle, "class", "svelte-rh5vi");
       toggle_class(circle, "desaturate", ctx2[29].date > ctx2[12]);
     },
     m(target, anchor) {
@@ -28527,11 +28524,12 @@ function create_fragment8(ctx2) {
   let feColorMatrix;
   let feColorMatrix_x_value;
   let feBlend;
-  let g1;
+  let g2;
   let axis0;
   let axis1;
   let g0;
-  let g1_transform_value;
+  let g1;
+  let g2_transform_value;
   let positionedTooltip_action;
   let current;
   let mounted;
@@ -28546,62 +28544,70 @@ function create_fragment8(ctx2) {
   axis1 = new Axis_default({
     props: { y: true, axis: ctx2[7] }
   });
-  let if_block0 = ctx2[11] === "area" && create_if_block_13(ctx2);
+  let if_block = ctx2[11] === "area" && create_if_block3(ctx2);
   let each_value_2 = ctx2[0];
-  let each_blocks = [];
+  let each_blocks_1 = [];
   for (let i = 0; i < each_value_2.length; i += 1) {
-    each_blocks[i] = create_each_block_22(get_each_context_22(ctx2, each_value_2, i));
+    each_blocks_1[i] = create_each_block_22(get_each_context_22(ctx2, each_value_2, i));
   }
-  let if_block1 = ctx2[11] === "line" && create_if_block3(ctx2);
+  let each_value = ctx2[0];
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block7(get_each_context7(ctx2, each_value, i));
+  }
   return {
     c() {
       svg2 = svg_element("svg");
       filter2 = svg_element("filter");
       feColorMatrix = svg_element("feColorMatrix");
       feBlend = svg_element("feBlend");
-      g1 = svg_element("g");
+      g2 = svg_element("g");
       create_component(axis0.$$.fragment);
       create_component(axis1.$$.fragment);
-      if (if_block0)
-        if_block0.c();
+      if (if_block)
+        if_block.c();
       g0 = svg_element("g");
+      for (let i = 0; i < each_blocks_1.length; i += 1) {
+        each_blocks_1[i].c();
+      }
+      g1 = svg_element("g");
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      if (if_block1)
-        if_block1.c();
       attr(feColorMatrix, "type", "saturate");
       attr(feColorMatrix, "values", "0.5");
       attr(feColorMatrix, "x", feColorMatrix_x_value = ctx2[3](ctx2[12]));
       attr(feBlend, "in2", "SourceGraphic");
       attr(filter2, "id", "desaturateFuture");
-      attr(g0, "class", "lines svelte-1gzc8m3");
+      attr(g0, "class", "lines svelte-rh5vi");
       attr(g0, "filter", ctx2[6]);
-      attr(g1, "transform", g1_transform_value = `translate(${ctx2[13].left},${ctx2[13].top})`);
-      attr(g1, "class", "svelte-1gzc8m3");
+      attr(g2, "transform", g2_transform_value = `translate(${ctx2[13].left},${ctx2[13].top})`);
+      attr(g2, "class", "svelte-rh5vi");
       attr(svg2, "width", ctx2[1]);
       attr(svg2, "height", height2);
-      attr(svg2, "class", "svelte-1gzc8m3");
+      attr(svg2, "class", "svelte-rh5vi");
     },
     m(target, anchor) {
       insert(target, svg2, anchor);
       append(svg2, filter2);
       append(filter2, feColorMatrix);
       append(filter2, feBlend);
-      append(svg2, g1);
-      mount_component(axis0, g1, null);
-      mount_component(axis1, g1, null);
-      if (if_block0)
-        if_block0.m(g1, null);
-      append(g1, g0);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].m(g0, null);
+      append(svg2, g2);
+      mount_component(axis0, g2, null);
+      mount_component(axis1, g2, null);
+      if (if_block)
+        if_block.m(g2, null);
+      append(g2, g0);
+      for (let i = 0; i < each_blocks_1.length; i += 1) {
+        each_blocks_1[i].m(g0, null);
       }
-      if (if_block1)
-        if_block1.m(g1, null);
+      append(g2, g1);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].m(g1, null);
+      }
       current = true;
       if (!mounted) {
-        dispose = action_destroyer(positionedTooltip_action = positionedTooltip.call(null, g1, ctx2[14]));
+        dispose = action_destroyer(positionedTooltip_action = positionedTooltip.call(null, g2, ctx2[14]));
         mounted = true;
       }
     },
@@ -28620,49 +28626,55 @@ function create_fragment8(ctx2) {
         axis1_changes.axis = ctx3[7];
       axis1.$set(axis1_changes);
       if (ctx3[11] === "area") {
-        if (if_block0) {
-          if_block0.p(ctx3, dirty);
+        if (if_block) {
+          if_block.p(ctx3, dirty);
         } else {
-          if_block0 = create_if_block_13(ctx3);
-          if_block0.c();
-          if_block0.m(g1, g0);
+          if_block = create_if_block3(ctx3);
+          if_block.c();
+          if_block.m(g2, g0);
         }
-      } else if (if_block0) {
-        if_block0.d(1);
-        if_block0 = null;
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
       }
       if (dirty[0] & 1057) {
         each_value_2 = ctx3[0];
         let i;
         for (i = 0; i < each_value_2.length; i += 1) {
           const child_ctx = get_each_context_22(ctx3, each_value_2, i);
+          if (each_blocks_1[i]) {
+            each_blocks_1[i].p(child_ctx, dirty);
+          } else {
+            each_blocks_1[i] = create_each_block_22(child_ctx);
+            each_blocks_1[i].c();
+            each_blocks_1[i].m(g0, null);
+          }
+        }
+        for (; i < each_blocks_1.length; i += 1) {
+          each_blocks_1[i].d(1);
+        }
+        each_blocks_1.length = each_value_2.length;
+      }
+      if (!current || dirty[0] & 64) {
+        attr(g0, "filter", ctx3[6]);
+      }
+      if (dirty[0] & 4141) {
+        each_value = ctx3[0];
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context7(ctx3, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
           } else {
-            each_blocks[i] = create_each_block_22(child_ctx);
+            each_blocks[i] = create_each_block7(child_ctx);
             each_blocks[i].c();
-            each_blocks[i].m(g0, null);
+            each_blocks[i].m(g1, null);
           }
         }
         for (; i < each_blocks.length; i += 1) {
           each_blocks[i].d(1);
         }
-        each_blocks.length = each_value_2.length;
-      }
-      if (!current || dirty[0] & 64) {
-        attr(g0, "filter", ctx3[6]);
-      }
-      if (ctx3[11] === "line") {
-        if (if_block1) {
-          if_block1.p(ctx3, dirty);
-        } else {
-          if_block1 = create_if_block3(ctx3);
-          if_block1.c();
-          if_block1.m(g1, null);
-        }
-      } else if (if_block1) {
-        if_block1.d(1);
-        if_block1 = null;
+        each_blocks.length = each_value.length;
       }
       if (!current || dirty[0] & 2) {
         attr(svg2, "width", ctx3[1]);
@@ -28685,11 +28697,10 @@ function create_fragment8(ctx2) {
         detach(svg2);
       destroy_component(axis0);
       destroy_component(axis1);
-      if (if_block0)
-        if_block0.d();
+      if (if_block)
+        if_block.d();
+      destroy_each(each_blocks_1, detaching);
       destroy_each(each_blocks, detaching);
-      if (if_block1)
-        if_block1.d();
       mounted = false;
       dispose();
     }
@@ -28774,11 +28785,11 @@ function instance8($$self, $$props, $$invalidate) {
     }
     if ($$self.$$.dirty[0] & 12) {
       $:
-        $$invalidate(10, lineShape = line_default().x((d) => x2(d.date)).y((d) => y2(d.value)).curve(stepAfter));
+        $$invalidate(10, lineShape = line_default().x((d) => x2(d.date)).y((d) => y2(d.value)).curve(monotoneX));
     }
     if ($$self.$$.dirty[0] & 28) {
       $:
-        $$invalidate(9, areaShape = area_default().x((d) => x2(d.date)).y1((d) => y2(d.value)).y0(Math.min(innerHeight2, y2(0))).curve(stepAfter));
+        $$invalidate(9, areaShape = area_default().x((d) => x2(d.date)).y1((d) => y2(d.value)).y0(Math.min(innerHeight2, y2(0))).curve(monotoneX));
     }
     if ($$self.$$.dirty[0] & 8) {
       $:
@@ -28976,25 +28987,104 @@ function get_each_context9(ctx2, list, i) {
   child_ctx[14] = list[i];
   return child_ctx;
 }
-function create_each_block9(ctx2) {
+function create_if_block4(ctx2) {
+  let line;
+  let line_x__value;
+  let line_x__value_1;
+  let line_y__value;
+  let line_y__value_1;
+  let line_stroke_value;
   let circle;
   let circle_fill_value;
   let circle_cx_value;
   let circle_cy_value;
   return {
     c() {
+      line = svg_element("line");
       circle = svg_element("circle");
+      attr(line, "class", "event-line svelte-9owufi");
+      attr(line, "x1", line_x__value = ctx2[3](ctx2[14].date));
+      attr(line, "x2", line_x__value_1 = ctx2[3](new Date(ctx2[14].meta.end)));
+      attr(line, "y1", line_y__value = ctx2[2](ctx2[14].type));
+      attr(line, "y2", line_y__value_1 = ctx2[2](ctx2[14].type));
+      attr(line, "stroke", line_stroke_value = scatterplotScale(ctx2[14].type));
+      attr(circle, "r", "3");
+      attr(circle, "fill", circle_fill_value = scatterplotScale(ctx2[14].type));
+      attr(circle, "cx", circle_cx_value = ctx2[3](new Date(ctx2[14].meta.end)));
+      attr(circle, "cy", circle_cy_value = ctx2[2](ctx2[14].type));
+      attr(circle, "class", "svelte-9owufi");
+      toggle_class(circle, "desaturate", ctx2[14].date > ctx2[7]);
+    },
+    m(target, anchor) {
+      insert(target, line, anchor);
+      insert(target, circle, anchor);
+    },
+    p(ctx3, dirty) {
+      if (dirty & 9 && line_x__value !== (line_x__value = ctx3[3](ctx3[14].date))) {
+        attr(line, "x1", line_x__value);
+      }
+      if (dirty & 9 && line_x__value_1 !== (line_x__value_1 = ctx3[3](new Date(ctx3[14].meta.end)))) {
+        attr(line, "x2", line_x__value_1);
+      }
+      if (dirty & 5 && line_y__value !== (line_y__value = ctx3[2](ctx3[14].type))) {
+        attr(line, "y1", line_y__value);
+      }
+      if (dirty & 5 && line_y__value_1 !== (line_y__value_1 = ctx3[2](ctx3[14].type))) {
+        attr(line, "y2", line_y__value_1);
+      }
+      if (dirty & 1 && line_stroke_value !== (line_stroke_value = scatterplotScale(ctx3[14].type))) {
+        attr(line, "stroke", line_stroke_value);
+      }
+      if (dirty & 1 && circle_fill_value !== (circle_fill_value = scatterplotScale(ctx3[14].type))) {
+        attr(circle, "fill", circle_fill_value);
+      }
+      if (dirty & 9 && circle_cx_value !== (circle_cx_value = ctx3[3](new Date(ctx3[14].meta.end)))) {
+        attr(circle, "cx", circle_cx_value);
+      }
+      if (dirty & 5 && circle_cy_value !== (circle_cy_value = ctx3[2](ctx3[14].type))) {
+        attr(circle, "cy", circle_cy_value);
+      }
+      if (dirty & 129) {
+        toggle_class(circle, "desaturate", ctx3[14].date > ctx3[7]);
+      }
+    },
+    d(detaching) {
+      if (detaching)
+        detach(line);
+      if (detaching)
+        detach(circle);
+    }
+  };
+}
+function create_each_block9(ctx2) {
+  var _a2;
+  let circle;
+  let circle_fill_value;
+  let circle_cx_value;
+  let circle_cy_value;
+  let if_block_anchor;
+  let if_block = ((_a2 = ctx2[14].meta) == null ? void 0 : _a2.end) && create_if_block4(ctx2);
+  return {
+    c() {
+      circle = svg_element("circle");
+      if (if_block)
+        if_block.c();
+      if_block_anchor = empty();
       attr(circle, "r", "5");
       attr(circle, "fill", circle_fill_value = scatterplotScale(ctx2[14].type));
       attr(circle, "cx", circle_cx_value = ctx2[3](ctx2[14].date));
       attr(circle, "cy", circle_cy_value = ctx2[2](ctx2[14].type));
-      attr(circle, "class", "svelte-jl8ee");
+      attr(circle, "class", "svelte-9owufi");
       toggle_class(circle, "desaturate", ctx2[14].date > ctx2[7]);
     },
     m(target, anchor) {
       insert(target, circle, anchor);
+      if (if_block)
+        if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
     },
     p(ctx3, dirty) {
+      var _a3;
       if (dirty & 1 && circle_fill_value !== (circle_fill_value = scatterplotScale(ctx3[14].type))) {
         attr(circle, "fill", circle_fill_value);
       }
@@ -29007,10 +29097,26 @@ function create_each_block9(ctx2) {
       if (dirty & 129) {
         toggle_class(circle, "desaturate", ctx3[14].date > ctx3[7]);
       }
+      if ((_a3 = ctx3[14].meta) == null ? void 0 : _a3.end) {
+        if (if_block) {
+          if_block.p(ctx3, dirty);
+        } else {
+          if_block = create_if_block4(ctx3);
+          if_block.c();
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
+      }
     },
     d(detaching) {
       if (detaching)
         detach(circle);
+      if (if_block)
+        if_block.d(detaching);
+      if (detaching)
+        detach(if_block_anchor);
     }
   };
 }
@@ -29051,10 +29157,10 @@ function create_fragment10(ctx2) {
         each_blocks[i].c();
       }
       attr(g1, "transform", g1_transform_value = `translate(${ctx2[8].left},${ctx2[8].top})`);
-      attr(g1, "class", "svelte-jl8ee");
+      attr(g1, "class", "svelte-9owufi");
       attr(svg2, "width", ctx2[1]);
       attr(svg2, "height", height3);
-      attr(svg2, "class", "svelte-jl8ee");
+      attr(svg2, "class", "svelte-9owufi");
     },
     m(target, anchor) {
       insert(target, svg2, anchor);
@@ -29142,7 +29248,11 @@ function instance10($$self, $$props, $$invalidate) {
   const today = new Date();
   const margin = { top: 10, right: 10, bottom: 30, left: 70 };
   function tooltipText(d) {
-    return [domHelpers.t(d.description), domHelpers.em(day2(d.date))];
+    var _a2;
+    return [
+      domHelpers.t(d.description),
+      domHelpers.em(day2(d.date) + (((_a2 = d.meta) == null ? void 0 : _a2.end) ? " - " + d.meta.end : ""))
+    ];
   }
   const tooltipFindNode = (xPos, yPos) => {
     var _a2;
@@ -29607,12 +29717,12 @@ function create_each_block10(ctx2) {
     }
   };
 }
-function create_if_block4(ctx2) {
+function create_if_block5(ctx2) {
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block_14, create_else_block];
+  const if_block_creators = [create_if_block_13, create_else_block];
   const if_blocks = [];
   function select_block_type_2(ctx3, dirty) {
     if (ctx3[11][ctx3[0].type])
@@ -29697,7 +29807,7 @@ function create_else_block(ctx2) {
     }
   };
 }
-function create_if_block_14(ctx2) {
+function create_if_block_13(ctx2) {
   let switch_instance;
   let switch_instance_anchor;
   let current;
@@ -29802,7 +29912,7 @@ function create_fragment11(ctx2) {
   if_block0 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
   const default_slot_template = ctx2[13].default;
   const default_slot = create_slot(default_slot_template, ctx2, ctx2[12], null);
-  let if_block1 = ctx2[1] && create_if_block4(ctx2);
+  let if_block1 = ctx2[1] && create_if_block5(ctx2);
   return {
     c() {
       div0 = element("div");
@@ -29889,7 +29999,7 @@ function create_fragment11(ctx2) {
             transition_in(if_block1, 1);
           }
         } else {
-          if_block1 = create_if_block4(ctx3);
+          if_block1 = create_if_block5(ctx3);
           if_block1.c();
           transition_in(if_block1, 1);
           if_block1.m(div1, null);
@@ -30430,7 +30540,7 @@ function commodities(json, _ctx, label) {
 
 // src/charts/scatterplot.ts
 var scatterplot_validator = array(
-  object({ type: string, date, description: string })
+  object({ type: string, date, description: string, meta: unknown })
 );
 function scatterplot(json) {
   const res2 = scatterplot_validator(json);
@@ -30477,7 +30587,7 @@ function get_each_context12(ctx2, list, i) {
   child_ctx[7] = i;
   return child_ctx;
 }
-function create_if_block5(ctx2) {
+function create_if_block6(ctx2) {
   let chart;
   let t4;
   let div;
@@ -30640,7 +30750,7 @@ function create_each_block12(ctx2) {
 function create_fragment13(ctx2) {
   let if_block_anchor;
   let current;
-  let if_block = ctx2[1] && create_if_block5(ctx2);
+  let if_block = ctx2[1] && create_if_block6(ctx2);
   return {
     c() {
       if (if_block)
@@ -30661,7 +30771,7 @@ function create_fragment13(ctx2) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block5(ctx3);
+          if_block = create_if_block6(ctx3);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -30825,7 +30935,7 @@ function get_each_context13(ctx2, list, i) {
   child_ctx[29] = i;
   return child_ctx;
 }
-function create_if_block_15(ctx2) {
+function create_if_block_14(ctx2) {
   let button;
   let button_tabindex_value;
   let mounted;
@@ -30854,7 +30964,7 @@ function create_if_block_15(ctx2) {
     }
   };
 }
-function create_if_block6(ctx2) {
+function create_if_block7(ctx2) {
   let ul;
   let each_value = ctx2[5];
   let each_blocks = [];
@@ -30959,8 +31069,8 @@ function create_fragment14(ctx2) {
   let span_class_value;
   let mounted;
   let dispose;
-  let if_block0 = ctx2[4] && ctx2[0] && create_if_block_15(ctx2);
-  let if_block1 = ctx2[5].length && create_if_block6(ctx2);
+  let if_block0 = ctx2[4] && ctx2[0] && create_if_block_14(ctx2);
+  let if_block1 = ctx2[5].length && create_if_block7(ctx2);
   return {
     c() {
       span = element("span");
@@ -31017,7 +31127,7 @@ function create_fragment14(ctx2) {
         if (if_block0) {
           if_block0.p(ctx3, dirty);
         } else {
-          if_block0 = create_if_block_15(ctx3);
+          if_block0 = create_if_block_14(ctx3);
           if_block0.c();
           if_block0.m(span, t13);
         }
@@ -31029,7 +31139,7 @@ function create_fragment14(ctx2) {
         if (if_block1) {
           if_block1.p(ctx3, dirty);
         } else {
-          if_block1 = create_if_block6(ctx3);
+          if_block1 = create_if_block7(ctx3);
           if_block1.c();
           if_block1.m(span, null);
         }
@@ -31432,7 +31542,7 @@ function attemptFocus(el) {
 }
 
 // src/modals/ModalBase.svelte
-function create_if_block7(ctx2) {
+function create_if_block8(ctx2) {
   let div2;
   let div0;
   let t03;
@@ -31529,7 +31639,7 @@ function create_if_block7(ctx2) {
 function create_fragment16(ctx2) {
   let if_block_anchor;
   let current;
-  let if_block = ctx2[0] && create_if_block7(ctx2);
+  let if_block = ctx2[0] && create_if_block8(ctx2);
   return {
     c() {
       if (if_block)
@@ -31550,7 +31660,7 @@ function create_fragment16(ctx2) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block7(ctx3);
+          if_block = create_if_block8(ctx3);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -31640,7 +31750,7 @@ function get_each_context14(ctx2, list, i) {
   child_ctx[12] = list[i];
   return child_ctx;
 }
-function create_if_block_16(ctx2) {
+function create_if_block_15(ctx2) {
   let p;
   let span0;
   let t0_value = ctx2[3] ? "\u25BE" : "\u25B8";
@@ -31774,7 +31884,7 @@ function create_if_block_23(ctx2) {
     }
   };
 }
-function create_if_block8(ctx2) {
+function create_if_block9(ctx2) {
   let ul;
   let ul_hidden_value;
   let current;
@@ -31902,8 +32012,8 @@ function create_fragment17(ctx2) {
   let t4;
   let if_block1_anchor;
   let current;
-  let if_block0 = ctx2[0].name && create_if_block_16(ctx2);
-  let if_block1 = ctx2[6] && create_if_block8(ctx2);
+  let if_block0 = ctx2[0].name && create_if_block_15(ctx2);
+  let if_block1 = ctx2[6] && create_if_block9(ctx2);
   return {
     c() {
       if (if_block0)
@@ -31927,7 +32037,7 @@ function create_fragment17(ctx2) {
         if (if_block0) {
           if_block0.p(ctx3, dirty);
         } else {
-          if_block0 = create_if_block_16(ctx3);
+          if_block0 = create_if_block_15(ctx3);
           if_block0.c();
           if_block0.m(t4.parentNode, t4);
         }
@@ -31942,7 +32052,7 @@ function create_fragment17(ctx2) {
             transition_in(if_block1, 1);
           }
         } else {
-          if_block1 = create_if_block8(ctx3);
+          if_block1 = create_if_block9(ctx3);
           if_block1.c();
           transition_in(if_block1, 1);
           if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
@@ -32215,7 +32325,7 @@ function create_if_block_24(ctx2) {
     }
   };
 }
-function create_if_block_17(ctx2) {
+function create_if_block_16(ctx2) {
   let await_block_anchor;
   let promise;
   let current;
@@ -32273,7 +32383,7 @@ function create_if_block_17(ctx2) {
     }
   };
 }
-function create_if_block9(ctx2) {
+function create_if_block10(ctx2) {
   let object2;
   return {
     c() {
@@ -32371,8 +32481,8 @@ function create_fragment19(ctx2) {
   let if_block_anchor;
   let current;
   const if_block_creators = [
-    create_if_block9,
-    create_if_block_17,
+    create_if_block10,
+    create_if_block_16,
     create_if_block_24,
     create_if_block_32,
     create_else_block2
@@ -32774,7 +32884,7 @@ var Table = class extends SvelteComponent {
 var Table_default = Table;
 
 // src/documents/Documents.svelte
-function create_if_block_18(ctx2) {
+function create_if_block_17(ctx2) {
   let modalbase;
   let current;
   modalbase = new ModalBase_default({
@@ -32923,7 +33033,7 @@ function create_default_slot2(ctx2) {
     }
   };
 }
-function create_if_block10(ctx2) {
+function create_if_block11(ctx2) {
   let documentpreview;
   let current;
   documentpreview = new DocumentPreview_default({
@@ -32970,7 +33080,7 @@ function create_fragment21(ctx2) {
   let current;
   let mounted;
   let dispose;
-  let if_block0 = ctx2[2] && create_if_block_18(ctx2);
+  let if_block0 = ctx2[2] && create_if_block_17(ctx2);
   accounts2 = new Accounts_default({
     props: {
       node: ctx2[3],
@@ -32986,7 +33096,7 @@ function create_fragment21(ctx2) {
   }
   table = new Table_default({ props: table_props });
   binding_callbacks.push(() => bind(table, "selected", table_selected_binding));
-  let if_block1 = ctx2[1] && create_if_block10(ctx2);
+  let if_block1 = ctx2[1] && create_if_block11(ctx2);
   return {
     c() {
       if (if_block0)
@@ -33028,7 +33138,7 @@ function create_fragment21(ctx2) {
             transition_in(if_block0, 1);
           }
         } else {
-          if_block0 = create_if_block_18(ctx3);
+          if_block0 = create_if_block_17(ctx3);
           if_block0.c();
           transition_in(if_block0, 1);
           if_block0.m(t03.parentNode, t03);
@@ -33062,7 +33172,7 @@ function create_fragment21(ctx2) {
             transition_in(if_block1, 1);
           }
         } else {
-          if_block1 = create_if_block10(ctx3);
+          if_block1 = create_if_block11(ctx3);
           if_block1.c();
           transition_in(if_block1, 1);
           if_block1.m(div1, null);
@@ -33385,7 +33495,7 @@ function create_each_block_15(ctx2) {
     }
   };
 }
-function create_if_block11(ctx2) {
+function create_if_block12(ctx2) {
   let span;
   let code;
   let t13;
@@ -33563,7 +33673,7 @@ function create_fragment23(ctx2) {
   key1 = new Key_default({ props: { key: `${modKey}+/` } });
   key2 = new Key_default({ props: { key: "Ctrl+Alt+]" } });
   key3 = new Key_default({ props: { key: "Ctrl+Alt+[" } });
-  let if_block = ctx2[2].length && create_if_block11(ctx2);
+  let if_block = ctx2[2].length && create_if_block12(ctx2);
   const default_slot_template = ctx2[8].default;
   const default_slot = create_slot(default_slot_template, ctx2, ctx2[7], null);
   return {
@@ -33705,7 +33815,7 @@ function create_fragment23(ctx2) {
         if (if_block) {
           if_block.p(ctx3, dirty);
         } else {
-          if_block = create_if_block11(ctx3);
+          if_block = create_if_block12(ctx3);
           if_block.c();
           if_block.m(div0, null);
         }
@@ -34407,7 +34517,7 @@ function get_each_context18(ctx2, list, i) {
   child_ctx[10] = i;
   return child_ctx;
 }
-function create_if_block12(ctx2) {
+function create_if_block13(ctx2) {
   let button;
   let t4;
   let button_title_value;
@@ -34463,7 +34573,7 @@ function create_each_block18(ctx2) {
   function change_handler_1(...args) {
     return ctx2[7](ctx2[8], ...args);
   }
-  let if_block = ctx2[10] === ctx2[1].length - 1 && create_if_block12(ctx2);
+  let if_block = ctx2[10] === ctx2[1].length - 1 && create_if_block13(ctx2);
   return {
     c() {
       div = element("div");
@@ -34523,7 +34633,7 @@ function create_each_block18(ctx2) {
         if (if_block) {
           if_block.p(ctx2, dirty);
         } else {
-          if_block = create_if_block12(ctx2);
+          if_block = create_if_block13(ctx2);
           if_block.c();
           if_block.m(div, t4);
         }
@@ -35980,7 +36090,7 @@ function preprocessData(arr) {
 }
 
 // src/import/Extract.svelte
-function create_if_block13(ctx2) {
+function create_if_block14(ctx2) {
   let div0;
   let h3;
   let t03;
@@ -36032,7 +36142,7 @@ function create_if_block13(ctx2) {
   }
   let current_block_type = select_block_type(ctx2, -1);
   let if_block1 = current_block_type(ctx2);
-  let if_block2 = ctx2[3].meta.__source__ && create_if_block_19(ctx2);
+  let if_block2 = ctx2[3].meta.__source__ && create_if_block_18(ctx2);
   return {
     c() {
       div0 = element("div");
@@ -36162,7 +36272,7 @@ function create_if_block13(ctx2) {
         if (if_block2) {
           if_block2.p(ctx3, dirty);
         } else {
-          if_block2 = create_if_block_19(ctx3);
+          if_block2 = create_if_block_18(ctx3);
           if_block2.c();
           if_block2.m(if_block2_anchor.parentNode, if_block2_anchor);
         }
@@ -36311,7 +36421,7 @@ function create_if_block_33(ctx2) {
     }
   };
 }
-function create_if_block_19(ctx2) {
+function create_if_block_18(ctx2) {
   let h3;
   let t0_value = _("Source") + "";
   let t03;
@@ -36419,7 +36529,7 @@ function create_default_slot4(ctx2) {
   let current;
   let mounted;
   let dispose;
-  let if_block = ctx2[3] && create_if_block13(ctx2);
+  let if_block = ctx2[3] && create_if_block14(ctx2);
   return {
     c() {
       form = element("form");
@@ -36450,7 +36560,7 @@ function create_default_slot4(ctx2) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block13(ctx3);
+          if_block = create_if_block14(ctx3);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(form, null);
@@ -36633,7 +36743,7 @@ function get_each_context_16(ctx2, list, i) {
   child_ctx[18] = i;
   return child_ctx;
 }
-function create_if_block14(ctx2) {
+function create_if_block15(ctx2) {
   let button;
   let t0_value = (ctx2[1].get(`${ctx2[13].name}:${ctx2[16].importer_name}`) ? _("Continue") : _("Extract")) + "";
   let t03;
@@ -36648,7 +36758,7 @@ function create_if_block14(ctx2) {
   function click_handler_3() {
     return ctx2[11](ctx2[13], ctx2[16]);
   }
-  let if_block = show_if && create_if_block_110(ctx2);
+  let if_block = show_if && create_if_block_19(ctx2);
   return {
     c() {
       button = element("button");
@@ -36687,7 +36797,7 @@ function create_if_block14(ctx2) {
         if (if_block) {
           if_block.p(ctx2, dirty);
         } else {
-          if_block = create_if_block_110(ctx2);
+          if_block = create_if_block_19(ctx2);
           if_block.c();
           if_block.m(t22.parentNode, t22);
         }
@@ -36714,7 +36824,7 @@ function create_if_block14(ctx2) {
     }
   };
 }
-function create_if_block_110(ctx2) {
+function create_if_block_19(ctx2) {
   let button;
   let mounted;
   let dispose;
@@ -36774,7 +36884,7 @@ function create_each_block_16(ctx2) {
   function click_handler_2() {
     return ctx2[10](ctx2[13], ctx2[16]);
   }
-  let if_block = ctx2[16].importer_name && create_if_block14(ctx2);
+  let if_block = ctx2[16].importer_name && create_if_block15(ctx2);
   return {
     c() {
       div = element("div");
@@ -36829,7 +36939,7 @@ function create_each_block_16(ctx2) {
         if (if_block) {
           if_block.p(ctx2, dirty);
         } else {
-          if_block = create_if_block14(ctx2);
+          if_block = create_if_block15(ctx2);
           if_block.c();
           if_block.m(div, t4);
         }
@@ -37226,7 +37336,7 @@ function create_if_block_26(ctx2) {
     }
   };
 }
-function create_if_block_111(ctx2) {
+function create_if_block_110(ctx2) {
   let details;
   let summary;
   let t13;
@@ -37298,7 +37408,7 @@ function create_if_block_111(ctx2) {
     }
   };
 }
-function create_if_block15(ctx2) {
+function create_if_block16(ctx2) {
   let div;
   let documentpreview;
   let current;
@@ -37355,8 +37465,8 @@ function create_fragment36(ctx2) {
   });
   let if_block0 = ctx2[0].length === 0 && create_if_block_34(ctx2);
   let if_block1 = ctx2[5].length > 0 && create_if_block_26(ctx2);
-  let if_block2 = ctx2[4].length > 0 && create_if_block_111(ctx2);
-  let if_block3 = ctx2[2] && create_if_block15(ctx2);
+  let if_block2 = ctx2[4].length > 0 && create_if_block_110(ctx2);
+  let if_block3 = ctx2[2] && create_if_block16(ctx2);
   return {
     c() {
       create_component(extract_1.$$.fragment);
@@ -37440,7 +37550,7 @@ function create_fragment36(ctx2) {
             transition_in(if_block2, 1);
           }
         } else {
-          if_block2 = create_if_block_111(ctx3);
+          if_block2 = create_if_block_110(ctx3);
           if_block2.c();
           transition_in(if_block2, 1);
           if_block2.m(div0, null);
@@ -37459,7 +37569,7 @@ function create_fragment36(ctx2) {
             transition_in(if_block3, 1);
           }
         } else {
-          if_block3 = create_if_block15(ctx3);
+          if_block3 = create_if_block16(ctx3);
           if_block3.c();
           transition_in(if_block3, 1);
           if_block3.m(div1, null);
@@ -38051,7 +38161,7 @@ function get_each_context_33(ctx2, list, i) {
   child_ctx[7] = list[i];
   return child_ctx;
 }
-function create_if_block16(ctx2) {
+function create_if_block17(ctx2) {
   let details;
   let summary;
   let span;
@@ -38405,7 +38515,7 @@ function create_fragment39(ctx2) {
   let a_href_value;
   let t5;
   let if_block_anchor;
-  let if_block = ctx2[1] && ctx2[2] && create_if_block16(ctx2);
+  let if_block = ctx2[1] && ctx2[2] && create_if_block17(ctx2);
   return {
     c() {
       p = element("p");
@@ -38448,7 +38558,7 @@ function create_fragment39(ctx2) {
         if (if_block) {
           if_block.p(ctx3, dirty);
         } else {
-          if_block = create_if_block16(ctx3);
+          if_block = create_if_block17(ctx3);
           if_block.c();
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
         }
@@ -38519,7 +38629,7 @@ function create_catch_block2(ctx2) {
 function create_then_block2(ctx2) {
   let if_block_anchor;
   let current;
-  let if_block = ctx2[4] && create_if_block17(ctx2);
+  let if_block = ctx2[4] && create_if_block18(ctx2);
   return {
     c() {
       if (if_block)
@@ -38540,7 +38650,7 @@ function create_then_block2(ctx2) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block17(ctx3);
+          if_block = create_if_block18(ctx3);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -38571,7 +38681,7 @@ function create_then_block2(ctx2) {
     }
   };
 }
-function create_if_block17(ctx2) {
+function create_if_block18(ctx2) {
   let entrycontext;
   let t4;
   let sliceeditor;
@@ -39246,7 +39356,7 @@ var DocumentUpload = class extends SvelteComponent {
 var DocumentUpload_default = DocumentUpload;
 
 // src/modals/Export.svelte
-function create_if_block18(ctx2) {
+function create_if_block19(ctx2) {
   let div;
   let h3;
   let t22;
@@ -39281,7 +39391,7 @@ function create_if_block18(ctx2) {
 }
 function create_default_slot8(ctx2) {
   let if_block_anchor;
-  let if_block = ctx2[0] && create_if_block18(ctx2);
+  let if_block = ctx2[0] && create_if_block19(ctx2);
   return {
     c() {
       if (if_block)
@@ -39298,7 +39408,7 @@ function create_default_slot8(ctx2) {
         if (if_block) {
           if_block.p(ctx3, dirty);
         } else {
-          if_block = create_if_block18(ctx3);
+          if_block = create_if_block19(ctx3);
           if_block.c();
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
         }
@@ -39610,7 +39720,7 @@ var QueryEditor = class extends SvelteComponent {
 var QueryEditor_default = QueryEditor;
 
 // src/query/QueryLinks.svelte
-function create_if_block19(ctx2) {
+function create_if_block20(ctx2) {
   let t03;
   let a0;
   let t13;
@@ -39690,7 +39800,7 @@ function create_fragment45(ctx2) {
   let a_href_value;
   let t4;
   let t5;
-  let if_block = ctx2[1] && create_if_block19(ctx2);
+  let if_block = ctx2[1] && create_if_block20(ctx2);
   return {
     c() {
       span = element("span");
@@ -39727,7 +39837,7 @@ function create_fragment45(ctx2) {
         if (if_block) {
           if_block.p(ctx3, dirty);
         } else {
-          if_block = create_if_block19(ctx3);
+          if_block = create_if_block20(ctx3);
           if_block.c();
           if_block.m(span, t5);
         }
@@ -39890,13 +40000,13 @@ function create_if_block_27(ctx2) {
     }
   };
 }
-function create_if_block20(ctx2) {
+function create_if_block21(ctx2) {
   let t4;
   let html_tag;
   let raw_value = ctx2[20].table + "";
   let html_anchor;
   let current;
-  let if_block = ctx2[20].chart && create_if_block_112(ctx2);
+  let if_block = ctx2[20].chart && create_if_block_111(ctx2);
   return {
     c() {
       if (if_block)
@@ -39922,7 +40032,7 @@ function create_if_block20(ctx2) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block_112(ctx3);
+          if_block = create_if_block_111(ctx3);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(t4.parentNode, t4);
@@ -39959,7 +40069,7 @@ function create_if_block20(ctx2) {
     }
   };
 }
-function create_if_block_112(ctx2) {
+function create_if_block_111(ctx2) {
   let chart;
   let current;
   chart = new Chart_default({
@@ -40015,7 +40125,7 @@ function create_each_block24(key_1, ctx2) {
   function click_handler() {
     return ctx2[8](ctx2[19]);
   }
-  const if_block_creators = [create_if_block20, create_if_block_27];
+  const if_block_creators = [create_if_block21, create_if_block_27];
   const if_blocks = [];
   function select_block_type(ctx3, dirty) {
     if (ctx3[20])

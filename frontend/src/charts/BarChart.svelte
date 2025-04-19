@@ -25,7 +25,7 @@
   export let tooltipText: BarChart["tooltipText"];
 
   const today = new Date();
-  const maxColumnWidth = 100;
+  const maxColumnWidth = 40;
   const margin = {
     top: 10,
     right: 10,
